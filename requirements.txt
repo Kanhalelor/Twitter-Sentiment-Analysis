@@ -7,6 +7,6 @@ regex==2022.4.24
 requests==2.27.1
 scikit-learn==1.0.2
 scipy==1.7.3
-snscrape==0.4.3.20220106
+snscrape==0.3.4
 streamlit==1.8.1
 textblob==0.17.1
