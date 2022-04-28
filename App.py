@@ -121,10 +121,10 @@ st.text(f"Negative number: {len(negative)}")
 st.text(f"Neutral number: {len(positive_list)}")
 
 st.header('Percentage-Wise')
-st.text(f"{positive} %")
-st.text(f"{negative} %")
-st.text(f"{neutral} %")
-st.text(f"{polarity} %")
+st.text(f"Positive: {positive} %")
+st.text(f"Negative: {negative} %")
+st.text(f"Neutral: {neutral} %")
+st.text(f"Polarity: {polarity} %")
 
 # plotting
 st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
