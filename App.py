@@ -250,7 +250,7 @@ else:
   fig,ax = plt.subplots()
   plt.figure(figsize=[10,10]);
 
-  explode = (0.1, 0.12, 0.122, 0,0,0,0,0,0,0)  # explode 1st slice
+  explode = (0.1, 0.12, 0.122, 0,0,0)  # explode 1st slice
   labels=list_of_words
 
   ax.pie(rslt['Frequency'], explode=explode,labels =labels , autopct='%1.1f%%',
