@@ -215,10 +215,12 @@ st.write("""---""")
 st.header("Boxplot to see average values of the labels and the positivity")
 st.write("""---""")
 
-boxplot = data.boxplot(column=['positive','negative', 'label'], 
+fig, ax = plt.subplots()
+ax = data.boxplot(column=['positive','negative', 'label'], 
                      fontsize = 15,grid = True, vert=True,figsize=(8,5,))
 ax.set_ylabel('Range')
-st.plotly_chart(boxplot)
-st.write("""---""")
+st.pyplot(fig)
 
-st.write("""Check back later for bugs :()""")
+
+st.write("""---""")
+st.header("""Check back later for bugs :()""")
