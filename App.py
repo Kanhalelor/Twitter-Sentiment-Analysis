@@ -142,87 +142,87 @@ else:
   st.write("""---""")
 # ---------------------------------------------------
 
-# plotting
-st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
-st.write("""---""")
-# ------------------ pie chart ---------------------
-fig, ax = plt.subplots()
+  # plotting
+  st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
+  st.write("""---""")
+  # ------------------ pie chart ---------------------
+  fig, ax = plt.subplots()
 
-labels = ['Positive ['+str(positive)+'%]' , 'Neutral ['+str(neutral)+'%]','Negative ['+str(negative)+'%]']
+  labels = ['Positive ['+str(positive)+'%]' , 'Neutral ['+str(neutral)+'%]','Negative ['+str(negative)+'%]']
 
-sizes = [positive, neutral, negative]
+  sizes = [positive, neutral, negative]
 
-colors = ['yellowgreen', 'blue','red']
+  colors = ['yellowgreen', 'blue','red']
 
-patches, texts = plt.pie(sizes,colors=colors, startangle=90)
+  patches, texts = plt.pie(sizes,colors=colors, startangle=90)
 
-ax.legend(loc="upper left", labels=labels)
+  ax.legend(loc="upper left", labels=labels)
 
-ax.set_title(f"Sentiment Analysis Result for keyword = {query} ")
-ax.axis('equal')
-
-
-#show pie chart
-st.pyplot(fig)
-st.write("""---""")
-# ----------------------------------
-data['Tweet'] = data['Tweet'].apply(clean_text)
+  ax.set_title(f"Sentiment Analysis Result for keyword = {query} ")
+  ax.axis('equal')
 
 
-st.header("Sentiment distribution, using wordcloud")
-st.write("""---""")
-from wordcloud import WordCloud
-allWords = ' '.join([twts for twts in data['Tweet']])
-wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
-
-fig,ax = plt.subplots()
-ax.imshow(wordCloud, interpolation = "bilinear")
-ax.axis('off')
-st.pyplot(fig)
-
-sid = SIA()
-results = []
-
-def get_sentiment(row, **kwargs):
-    sentiment_score = sid.polarity_scores(row)
-    positive_meter = round((sentiment_score['pos'] * 10), 2)
-    negative_meter = round((sentiment_score['neg'] * 10), 2) 
-    return positive_meter if kwargs['k'] == 'positive' else negative_meter
+  #show pie chart
+  st.pyplot(fig)
+  st.write("""---""")
+  # ----------------------------------
+  data['Tweet'] = data['Tweet'].apply(clean_text)
 
 
-data['positive'] = data.Tweet.apply(get_sentiment, k='positive')
-data['negative'] = data.Tweet.apply(get_sentiment, k='negative')
-data['neutral'] = data.Tweet.apply(get_sentiment, k='neutral')
-data['compound'] = data.Tweet.apply(get_sentiment, k='compound')
+  st.header("Sentiment distribution, using wordcloud")
+  st.write("""---""")
+  from wordcloud import WordCloud
+  allWords = ' '.join([twts for twts in data['Tweet']])
+  wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
 
-data['label'] = 0
-data.loc[data['positive'] > 0.2, 'label'] = 1
-data.loc[data['negative'] > 0.2, 'label'] = -1
+  fig,ax = plt.subplots()
+  ax.imshow(wordCloud, interpolation = "bilinear")
+  ax.axis('off')
+  st.pyplot(fig)
 
+  sid = SIA()
+  results = []
 
-st.header("Plot of Percentage Sentiment")
-st.write("""---""")
-sns.set(rc={'figure.figsize':(8,6)})
-
-counts = data.label.value_counts(normalize=True) * 100
-fig, ax = plt.subplots()
-
-ax = sns.barplot(x=counts.index, y=counts)
-ax.set(title="Plot of Percentage Sentiment")
-ax.set_xticklabels(['Negative', 'Neutral', 'Positive'])
-ax.set_ylabel("Percentage")
-
-st.pyplot(fig)
-st.write("""---""")
-st.header("Boxplot to see average values of the labels and the positivity")
-st.write("""---""")
-
-fig, ax = plt.subplots()
-ax = data.boxplot(column=['positive','negative', 'label'], 
-                     fontsize = 15,grid = True, vert=True,figsize=(8,5,))
-ax.set_ylabel('Range')
-st.pyplot(fig)
+  def get_sentiment(row, **kwargs):
+      sentiment_score = sid.polarity_scores(row)
+      positive_meter = round((sentiment_score['pos'] * 10), 2)
+      negative_meter = round((sentiment_score['neg'] * 10), 2) 
+      return positive_meter if kwargs['k'] == 'positive' else negative_meter
 
 
-st.write("""---""")
+  data['positive'] = data.Tweet.apply(get_sentiment, k='positive')
+  data['negative'] = data.Tweet.apply(get_sentiment, k='negative')
+  data['neutral'] = data.Tweet.apply(get_sentiment, k='neutral')
+  data['compound'] = data.Tweet.apply(get_sentiment, k='compound')
+
+  data['label'] = 0
+  data.loc[data['positive'] > 0.2, 'label'] = 1
+  data.loc[data['negative'] > 0.2, 'label'] = -1
+
+
+  st.header("Plot of Percentage Sentiment")
+  st.write("""---""")
+  sns.set(rc={'figure.figsize':(8,6)})
+
+  counts = data.label.value_counts(normalize=True) * 100
+  fig, ax = plt.subplots()
+
+  ax = sns.barplot(x=counts.index, y=counts)
+  ax.set(title="Plot of Percentage Sentiment")
+  ax.set_xticklabels(['Negative', 'Neutral', 'Positive'])
+  ax.set_ylabel("Percentage")
+
+  st.pyplot(fig)
+  st.write("""---""")
+  st.header("Boxplot to see average values of the labels and the positivity")
+  st.write("""---""")
+
+  fig, ax = plt.subplots()
+  ax = data.boxplot(column=['positive','negative', 'label'], 
+                       fontsize = 15,grid = True, vert=True,figsize=(8,5,))
+  ax.set_ylabel('Range')
+  st.pyplot(fig)
+
+
+  st.write("""---""")
 st.header("""Check back later for bugs :()""")
