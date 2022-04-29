@@ -59,7 +59,8 @@ def load_data(keywords, limit):
     else:
       tweets.append([tweet.content, tweet.date, tweet.username, tweet.id])
 
-
+if btn == True:
+  load_data(query, limit)
 
 data = pd.DataFrame(tweets,columns=['Tweet', 'Tweet Datetime', 'Tweet User', 'Tweet ID'])
 
@@ -221,6 +222,3 @@ st.plotly_chart(boxplot)
 st.write("""---""")
 
 st.write("""Check back later for bugs :()""")
-
-if btn == True:
-  load_data(query, limit)
