@@ -228,7 +228,7 @@ else:
   # pie chart for common words
   nltk.download('punkt') # ignore english words
   nltk.download('stopwords')
-  top_N = 10 # top words
+  top_N = 6 # top words
 
   stopwords = nltk.corpus.stopwords.words('english')
   # RegEx for stopwords
