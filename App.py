@@ -225,4 +225,6 @@ else:
 
 
   st.write("""---""")
-st.text("Copyright &copy @NUST-DARA, 2022")
+
+  st.write("""---""")
+  st.text("Copyright &copy; @NUST-DARA, 2022")
