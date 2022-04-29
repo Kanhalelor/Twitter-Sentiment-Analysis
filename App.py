@@ -176,7 +176,7 @@ wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size =
 fig,ax = plt.subplots()
 ax.imshow(wordCloud, interpolation = "bilinear")
 ax.axis('off')
-st.pylot(fig)
+st.pyplot(fig)
 
 sid = SIA()
 results = []
