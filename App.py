@@ -248,7 +248,7 @@ else:
   list_of_words = rslt.iloc[:,0].to_list()
   # Pie Chart
   fig,ax = plt.subplots()
-#   ax.figure(figsize=[10,10]);
+  plt.figure(figsize=[10,10]);
 
   explode = (0.1, 0.12, 0.122, 0,0,0,0,0,0,0)  # explode 1st slice
   labels=list_of_words
@@ -256,7 +256,7 @@ else:
   ax.pie(rslt['Frequency'], explode=explode,labels =labels , autopct='%1.1f%%',
           shadow=False, startangle=90, textprops={'fontsize': 14})
   ax.legend( labels, loc='best',fontsize='x-small',markerfirst = True)
-  ax.tight_layout()
+  plt.tight_layout()
   ax.title("Common Words in the Tweet", fontsize= 20)
   st.pyplot(fig)
 
