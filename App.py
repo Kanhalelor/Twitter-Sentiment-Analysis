@@ -107,37 +107,39 @@ for tweet in list(data['Tweet']):
     neutral_list.append(tweet)
     neutral += 1
     
-
-positive = calculate_percentage(positive, numOfTweets)
-negative = calculate_percentage(negative, numOfTweets)
-neutral = calculate_percentage(neutral, numOfTweets)
-polarity = calculate_percentage(polarity, numOfTweets)
-
-
-# format the data to one decimal place
-positive = format(positive, '.1f')
-negative = format(negative, '.1f')
-neutral = format(neutral, '.1f')
-polarity = format(polarity, '.1f')
-
-tweet_list = pd.DataFrame(tweet_list)
-neutral_list = pd.DataFrame(neutral_list)
-negative_list = pd.DataFrame(negative_list)
-positive_list = pd.DataFrame(positive_list)
+if numOfTweets < 1:
+  st.text("No tweets found for query!")
+ else:
+  positive = calculate_percentage(positive, numOfTweets)
+  negative = calculate_percentage(negative, numOfTweets)
+  neutral = calculate_percentage(neutral, numOfTweets)
+  polarity = calculate_percentage(polarity, numOfTweets)
 
 
-st.header("Sentiment Summary")
-st.text(f"Total Number of Tweets: {len(tweet_list)}")
-st.text(f"positive number: {len(neutral_list)}") 
-st.text(f"Negative number: {len(negative)}")
-st.text(f"Neutral number: {len(positive_list)}")
+  # format the data to one decimal place
+  positive = format(positive, '.1f')
+  negative = format(negative, '.1f')
+  neutral = format(neutral, '.1f')
+  polarity = format(polarity, '.1f')
 
-st.header('Percentage-Wise')
-st.text(f"Positive: {positive} %")
-st.text(f"Negative: {negative} %")
-st.text(f"Neutral: {neutral} %")
-st.text(f"Polarity: {polarity} %")
-st.write("""---""")
+  tweet_list = pd.DataFrame(tweet_list)
+  neutral_list = pd.DataFrame(neutral_list)
+  negative_list = pd.DataFrame(negative_list)
+  positive_list = pd.DataFrame(positive_list)
+
+
+  st.header("Sentiment Summary")
+  st.text(f"Total Number of Tweets: {len(tweet_list)}")
+  st.text(f"positive number: {len(neutral_list)}") 
+  st.text(f"Negative number: {len(negative)}")
+  st.text(f"Neutral number: {len(positive_list)}")
+
+  st.header('Percentage-Wise')
+  st.text(f"Positive: {positive} %")
+  st.text(f"Negative: {negative} %")
+  st.text(f"Neutral: {neutral} %")
+  st.text(f"Polarity: {polarity} %")
+  st.write("""---""")
 # ---------------------------------------------------
 
 # plotting
