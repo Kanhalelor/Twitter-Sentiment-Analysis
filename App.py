@@ -109,7 +109,7 @@ for tweet in list(data['Tweet']):
     
 if numOfTweets < 1:
   st.text("No tweets found for query!")
- else:
+else:
   positive = calculate_percentage(positive, numOfTweets)
   negative = calculate_percentage(negative, numOfTweets)
   neutral = calculate_percentage(neutral, numOfTweets)
