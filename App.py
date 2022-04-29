@@ -31,6 +31,7 @@ st.write("""----""")
 
 # ----------Streamlit Side bar -------------------
 st.sidebar.header('Keywords Selection')
+st.write("""---""")
 
 start_date = st.sidebar.date_input("Start Date: ")
 end_date = st.sidebar.date_input("End Date: ")
@@ -142,12 +143,12 @@ st.text(f"Positive: {positive} %")
 st.text(f"Negative: {negative} %")
 st.text(f"Neutral: {neutral} %")
 st.text(f"Polarity: {polarity} %")
-
+st.write("""---""")
 #_---------------------------------------------------
 
 # plotting
 st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
-
+st.write("""---""")
 # ------------------ pie chart ---------------------
 fig, ax = plt.subplots()
 
@@ -167,13 +168,13 @@ ax.axis('equal')
 
 #show pie chart
 st.pyplot(fig)
-
+st.write("""---""")
 # ----------------------------------
 data['Tweet'] = data['Tweet'].apply(clean_text)
 
 
 st.header("Sentiment distribution, using wordcloud")
-
+st.write("""---""")
 from wordcloud import WordCloud
 allWords = ' '.join([twts for twts in data['Tweet']])
 wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
@@ -206,7 +207,7 @@ data.loc[data['negative'] > 0.2, 'label'] = -1
 
 
 st.header("Plot of Percentage Sentiment")
-
+st.write("""---""")
 sns.set(rc={'figure.figsize':(8,6)})
 
 counts = data.label.value_counts(normalize=True) * 100
@@ -218,11 +219,14 @@ ax.set_xticklabels(['Negative', 'Neutral', 'Positive'])
 ax.set_ylabel("Percentage")
 
 st.pyplot(fig)
-
+st.write("""---""")
 st.header("Boxplot to see average values of the labels and the positivity")
-
+st.write("""---""")
 
 boxplot = data.boxplot(column=['positive','negative', 'label'], 
                      fontsize = 15,grid = True, vert=True,figsize=(8,5,))
 ax.set_ylabel('Range')
 st.plotly_chart(boxplot)
+st.write("""---""")
+
+st.write("""Check back later for bugs :()""")
