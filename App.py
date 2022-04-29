@@ -42,7 +42,7 @@ keyword = st.sidebar.text_input("Enter Keyword: ")
 
 limit = st.sidebar.number_input("Number of Tweets: ")
 
-st.sidebar.button('search')
+
 
 # ---------------------- ---------------
 
@@ -231,4 +231,5 @@ st.write("""---""")
 st.write("""Check back later for bugs :()""")
 
 if __name__ == "__main__":
-  load_data(query, limit)
+  if st.sidebar.button('search') == True:
+    load_data(query, limit)
