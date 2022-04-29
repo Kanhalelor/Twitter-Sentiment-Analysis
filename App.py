@@ -228,4 +228,4 @@ else:
 
 
 st.write("""---""")
-st.write("""<small style="color: blue;">Copyright &copy; @NUST-DARA, 2022</small>""")
+st.write("""Copyright © - NUST-DARA Data Science School, 2022""")
