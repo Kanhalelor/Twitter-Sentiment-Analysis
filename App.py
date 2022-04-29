@@ -47,7 +47,7 @@ st.sidebar.button('search')
 
 
 tweets = []
-query = f"Twitter (from: {keyword}) until:{end_date} since:{start_date}")
+query = f"Twitter (from: {keyword}) until:{end_date} since:{start_date}"
 
 # load data
 @st.cache
