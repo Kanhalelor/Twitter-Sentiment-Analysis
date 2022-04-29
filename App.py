@@ -200,7 +200,7 @@ else:
 
 
   st.subheader("Bar chart of Percentage Sentiment(```Vander```)")
-  st.write("""---""")
+#   st.write("""---""")
   sns.set(rc={'figure.figsize':(8,6)})
 
   counts = data.label.value_counts(normalize=True) * 100
@@ -214,16 +214,54 @@ else:
   st.pyplot(fig)
   st.write("""---""")
   st.subheader("Boxplot to see ```average``` values of the labels and the ```positivity```")
-  st.write("""---""")
+#   st.write("""---""")
 
   fig, ax = plt.subplots()
   ax = data.boxplot(column=['positive','negative', 'label'], 
                        fontsize = 15,grid = True, vert=True,figsize=(8,5,))
   ax.set_ylabel('Range')
   st.pyplot(fig)
+  st.write("""---""")
 
 
-#   st.write("""---""")
+  st.subheader("Pie chart of ```common words``` in tweets")
+  # pie chart for common words
+  nltk.download('punkt') # ignore english words
+  nltk.download('stopwords')
+  top_N = 10 # top words
+
+  stopwords = nltk.corpus.stopwords.words('english')
+  # RegEx for stopwords
+  RE_stopwords = r'\b(?:{})\b'.format('|'.join(stopwords))
+  # replace '|'-->' ' and drop all stopwords
+  words = (data.Tweet
+             .str.lower()
+             .replace([r'\|', RE_stopwords], [' ', ''], regex=True)
+             .str.cat(sep=' ')
+             .split()
+  )
+
+  # generate a temp DF out of Counter
+  rslt = pd.DataFrame(Counter(words).most_common(top_N),
+                      columns=['Word', 'Frequency'])#.set_index('Word')
+  
+  list_of_words = rslt.iloc[:,0].to_list()
+  # Pie Chart
+  fig,ax = plt.subplots()
+  ax.figure(figsize=[10,10]);
+
+  explode = (0.1, 0.12, 0.122, 0,0,0,0,0,0,0)  # explode 1st slice
+  labels=list_of_words
+
+  ax.pie(rslt['Frequency'], explode=explode,labels =labels , autopct='%1.1f%%',
+          shadow=False, startangle=90, textprops={'fontsize': 14})
+  ax.legend( labels, loc='best',fontsize='x-small',markerfirst = True)
+  ax.tight_layout()
+  ax.title("Common Words in the Tweet", fontsize= 20)
+  st.pyplot(fig)
+
+  import matplotlib as mpl
+  mpl.rcParams['font.size'] = 15
 
 
 st.write("""---""")
