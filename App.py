@@ -23,7 +23,7 @@ nltk.download('vader_lexicon')
 
 # ------------------------- streamlit part starts ---------------
 # main menu 
-st.write("""# Twitter Sentiment Anylasis App""")
+st.write("""# Twitter Sentiment Analysis App""")
 st.text("NUST-DARA DATA SCIENCE SCHOOL 2022")
 st.write("""By: Robson & Chisabi""")
 
@@ -222,6 +222,5 @@ st.write("""---""")
 
 st.write("""Check back later for bugs :()""")
 
-if __name__ == "__main__":
-  if btn == True:
-    load_data(query, limit)
+if btn == True:
+  load_data(query, limit)
