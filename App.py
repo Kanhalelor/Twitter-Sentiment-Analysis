@@ -35,9 +35,10 @@ st.sidebar.header('Keywords Selection')
 start_date = st.sidebar.date_input("Start Date: ")
 end_date = st.sidebar.date_input("End Date: ")
 
-query = st.sidebar.text_input(f"Twitter (from: elonmusk) until:{end_date} since:{start_date}")
+keyword = st.sidebar.text_input("Enter Keyword: ")
 
-date = st.sidebar.date_input("Select Date: ")
+
+
 limit = st.sidebar.number_input("Number of Tweets: ")
 
 st.sidebar.button('search')
@@ -46,18 +47,16 @@ st.sidebar.button('search')
 
 
 tweets = []
+query = f"Twitter (from: {keyword}) until:{end_date} since:{start_date}")
 
 # load data
 @st.cache
 def load_data(keywords, limit):
-  if keywords == "":
-    sys.exit()
-  else:
-    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-      if len(tweets)==limit:
-          break
-      else:
-          tweets.append([tweet.content, tweet.date, tweet.username, tweet.id])
+  for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+    if len(tweets)==limit:
+      break
+    else:
+      tweets.append([tweet.content, tweet.date, tweet.username, tweet.id])
 
 
 
