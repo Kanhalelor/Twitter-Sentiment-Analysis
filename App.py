@@ -61,8 +61,6 @@ def load_data(keywords, limit):
 
 
 
-load_data(query, limit)
-
 data = pd.DataFrame(tweets,columns=['Tweet', 'Tweet Datetime', 'Tweet User', 'Tweet ID'])
 
 # -----------------------------------------------
@@ -115,10 +113,13 @@ for tweet in list(data['Tweet']):
 
 
   
-positive = calculate_percentage(positive, numOfTweets)
-negative = calculate_percentage(negative, numOfTweets)
-neutral = calculate_percentage(neutral, numOfTweets)
-polarity = calculate_percentage(polarity, numOfTweets)
+if True:  
+  positive = calculate_percentage(positive, numOfTweets)
+  negative = calculate_percentage(negative, numOfTweets)
+  neutral = calculate_percentage(neutral, numOfTweets)
+  polarity = calculate_percentage(polarity, numOfTweets)
+else:
+  print("")
 
 # format the data to one decimal place
 positive = format(positive, '.1f')
@@ -228,3 +229,6 @@ st.plotly_chart(boxplot)
 st.write("""---""")
 
 st.write("""Check back later for bugs :()""")
+
+if __name__ == "__main__":
+  load_data(query, limit)
