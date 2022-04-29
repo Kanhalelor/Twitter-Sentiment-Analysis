@@ -133,7 +133,7 @@ else:
   st.text(f"Negative number: {len(negative)}")
   st.text(f"Neutral number: {len(positive_list)}")
 
-  st.subheader('Percentage of Tweet sentiment(```textblob```)')
+  st.subheader("Percentage of Tweet sentiment(```textblob```)")
   st.text(f"Positive: {positive} %")
   st.text(f"Negative: {negative} %")
   st.text(f"Neutral: {neutral} %")
