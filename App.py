@@ -23,7 +23,7 @@ nltk.download('vader_lexicon')
 
 # ------------------------- streamlit part starts ---------------
 # main menu 
-st.write("""# Twitter Sentiment Anylysis Application""")
+st.write("""# Twitter Sentiment Anylasis App""")
 st.text("NUST-DARA DATA SCIENCE SCHOOL 2022")
 st.write("""By: Robson & Chisabi""")
 
@@ -179,7 +179,7 @@ from wordcloud import WordCloud
 allWords = ' '.join([twts for twts in data['Tweet']])
 wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
 
-fig,ax = plt.suplots()
+fig,ax = plt.sublots()
 ax.imshow(wordCloud, interpolation = "bilinear")
 ax.axis('off')
 st.pylot(fig)
