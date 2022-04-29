@@ -142,7 +142,7 @@ else:
 # ---------------------------------------------------
 
   # plotting
-  st.subheader("""Pie chart of positive, Negative, and Neutral Sentiment""")
+  st.subheader("""Pie chart of ```positive```, ```Negative```, and ```Neutral``` Sentiment""")
   st.write("""---""")
   # ------------------ pie chart ---------------------
   fig, ax = plt.subplots()
@@ -168,7 +168,7 @@ else:
   data['Tweet'] = data['Tweet'].apply(clean_text)
 
 
-  st.subheader("Sentiment distribution, using wordcloud")
+  st.subheader("Sentiment distribution, using ```wordcloud```")
 #   st.write("""---""")
   from wordcloud import WordCloud
   allWords = ' '.join([twts for twts in data['Tweet']])
@@ -213,7 +213,7 @@ else:
 
   st.pyplot(fig)
   st.write("""---""")
-  st.subheader("Boxplot to see average values of the labels and the positivity")
+  st.subheader("Boxplot to see ```average``` values of the labels and the ```positivity```")
   st.write("""---""")
 
   fig, ax = plt.subplots()
