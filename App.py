@@ -225,4 +225,4 @@ else:
 
 
   st.write("""---""")
-st.header("""Check back later for bugs :()""")
+st.text("Copyright &copy @NUST-DARA, 2022")
