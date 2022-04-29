@@ -1,30 +1,42 @@
-from re import S
-from socket import if_nameindex
-# from wordcloud import WordCloud
-from textblob import TextBlob
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import matplotlib.pyplot as plt
-import re
 
-import nltk
-nltk.download('vader_lexicon')
-nltk.download('stopwords')
+import re, os, sys, nltk
+
+import seaborn as sns
 import streamlit as st
+import matplotlib.pyplot as plt
+
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
+
+from re import S
+from socket import if_nameindex
+from wordcloud import WordCloud
+from textblob import TextBlob
+from collections import Counter
+from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from datetime import date
+from helpers import clean_text, get_subjectivity, get_polarity
+
+
+nltk.download('vader_lexicon')
 
 # ------------------------- streamlit part starts ---------------
 # main menu 
 st.write("""# Twitter Sentiment Anylysis Application""")
-st.text("Submitted for: NUST DARA DATA SCIENCE SCHOOL 2022")
+st.text("NUST-DARA DATA SCIENCE SCHOOL 2022")
+st.write("""By: Robson & Chisabi""")
 
 st.write("""----""")
 
 # ----------Streamlit Side bar -------------------
 st.sidebar.header('Keywords Selection')
 
-query = st.sidebar.text_input("Input Keywords below to search: ")
-country = st.sidebar.text_input("Input Country to search from: ")
+start_date = st.sidebar.date_input("Start Date: ")
+end_date = st.sidebar.date_input("End Date: ")
+
+query = st.sidebar.text_input(f"Twitter (from: elonmusk) until:{end_date} since:{start_date}")
+
 date = st.sidebar.date_input("Select Date: ")
 limit = st.sidebar.number_input("Number of Tweets: ")
 
@@ -33,27 +45,33 @@ st.sidebar.button('search')
 # ---------------------- ---------------
 
 
-tweets=[ ]
+tweets = []
 
-for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-    if len(tweets)==limit:
-        break
-    else:
-        tweets.append([tweet.content, tweet.date, tweet.username])
+# load data
+@st.cache
+def load_data(keywords, limit):
+  if keywords == "":
+    sys.exit()
+  else:
+    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
+      if len(tweets)==limit:
+          break
+      else:
+          tweets.append([tweet.content, tweet.date, tweet.username, tweet.id])
 
-data = pd.DataFrame(tweets, columns=['Tweet','Date','User'])
 
-# save data to a csv file
-data.to_csv('scrapped.csv')
 
+load_data(query, limit)
+
+data = pd.DataFrame(tweets,columns=['Tweet', 'Tweet Datetime', 'Tweet User', 'Tweet ID'])
+
+# -----------------------------------------------
 
 numOfTweets = len(list(data["Tweet"]))
 
 # calculate percentage
 def calculate_percentage(part,whole):
   return 100 * (float(part)/float(whole))
-
-
 
 
 positive = 0
@@ -126,6 +144,8 @@ st.text(f"Negative: {negative} %")
 st.text(f"Neutral: {neutral} %")
 st.text(f"Polarity: {polarity} %")
 
+#_---------------------------------------------------
+
 # plotting
 st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
 
@@ -149,42 +169,61 @@ ax.axis('equal')
 #show pie chart
 st.pyplot(fig)
 
-#------------------------- pie chart ends --------------------------
-
-# CLEAN TWEETS
-#Clean the text using a function created below
-
-def clean_text(text):
-    text = re.sub(r'@[A-Za-z0-9]+', '', text) #Removed mentions
-    text = re.sub(r'#', '', text) #Removed hashtags
-    text = re.sub(r'RT[\s]+', '', text) #Remove retweets
-    text = re.sub(r'https?:\/\/\S+', '', text) #Remove the hyperlink
-    text = re.sub(r':[\s]+', '', text) #Remove columns
-    text = re.sub(r'\'[\s]+', '', text) #Remove apostrophe
-    text = re.sub(r'\...+', '', text) #Remove dots
-    
-    return text
-
-#Cleaning the text
+# ----------------------------------
 data['Tweet'] = data['Tweet'].apply(clean_text)
 
-# SUBJECTIVITY FUNCTIONS
-def get_subjectivity(text):
-    return TextBlob(text).sentiment.subjectivity
 
-def get_polarity(text):
-    return TextBlob(text).sentiment.polarity
+st.header("Sentiment distribution, using wordcloud")
 
-# ------------- Word Cloud ______________________________
+from wordcloud import WordCloud
+allWords = ' '.join([twts for twts in data['Tweet']])
+wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
 
-#See sentiment distribution, using wordcloud
-# fig, ax = plt.subplots()
+plt.imshow(wordCloud, interpolation = "bilinear")
+plt.axis('off')
+cloud = plt.show()
+st.plotly_chart(cloud)
 
-# allWords = ' '.join([twts for twts in data['Tweet']])
-# wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
 
-# ax.imshow(wordCloud, interpolation = "bilinear")
-# ax.axis('off')
 
-# st.header("Sentiment distribution, using wordcloud")
-# st.pyplot(fig)
+sid = SIA()
+results = []
+
+def get_sentiment(row, **kwargs):
+    sentiment_score = sid.polarity_scores(row)
+    positive_meter = round((sentiment_score['pos'] * 10), 2)
+    negative_meter = round((sentiment_score['neg'] * 10), 2) 
+    return positive_meter if kwargs['k'] == 'positive' else negative_meter
+
+
+data['positive'] = data.Tweet.apply(get_sentiment, k='positive')
+data['negative'] = data.Tweet.apply(get_sentiment, k='negative')
+data['neutral'] = data.Tweet.apply(get_sentiment, k='neutral')
+data['compound'] = data.Tweet.apply(get_sentiment, k='compound')
+
+data['label'] = 0
+data.loc[data['positive'] > 0.2, 'label'] = 1
+data.loc[data['negative'] > 0.2, 'label'] = -1
+
+
+st.header("Plot of Percentage Sentiment")
+
+sns.set(rc={'figure.figsize':(8,6)})
+
+counts = data.label.value_counts(normalize=True) * 100
+fig, ax = plt.subplots()
+
+ax = sns.barplot(x=counts.index, y=counts)
+ax.set(title="Plot of Percentage Sentiment")
+ax.set_xticklabels(['Negative', 'Neutral', 'Positive'])
+ax.set_ylabel("Percentage")
+
+st.pyplot(fig)
+
+st.header("Boxplot to see average values of the labels and the positivity")
+
+
+boxplot = data.boxplot(column=['positive','negative', 'label'], 
+                     fontsize = 15,grid = True, vert=True,figsize=(8,5,))
+ax.set_ylabel('Range')
+st.plotly_chart(boxplot)
