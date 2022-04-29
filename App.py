@@ -67,9 +67,9 @@ data = pd.DataFrame(tweets,columns=['Tweet', 'Tweet Datetime', 'Tweet User', 'Tw
 
 numOfTweets = len(list(data["Tweet"]))
 
-# calculate percentage
-def calculate_percentage(part,whole):
-  return 100 * (float(part)/float(whole))
+# # calculate percentage
+# def calculate_percentage(part,whole):
+#   return 100 * (float(part)/float(whole))
 
 
 positive = 0
@@ -113,13 +113,13 @@ for tweet in list(data['Tweet']):
 
 
   
-if True:  
-  positive = calculate_percentage(positive, numOfTweets)
-  negative = calculate_percentage(negative, numOfTweets)
-  neutral = calculate_percentage(neutral, numOfTweets)
-  polarity = calculate_percentage(polarity, numOfTweets)
-else:
-  print("")
+# if True:  
+#   positive = calculate_percentage(positive, numOfTweets)
+#   negative = calculate_percentage(negative, numOfTweets)
+#   neutral = calculate_percentage(neutral, numOfTweets)
+#   polarity = calculate_percentage(polarity, numOfTweets)
+# else:
+#   print("")
 
 # format the data to one decimal place
 positive = format(positive, '.1f')
@@ -139,12 +139,12 @@ st.text(f"positive number: {len(neutral_list)}")
 st.text(f"Negative number: {len(negative)}")
 st.text(f"Neutral number: {len(positive_list)}")
 
-st.header('Percentage-Wise')
-st.text(f"Positive: {positive} %")
-st.text(f"Negative: {negative} %")
-st.text(f"Neutral: {neutral} %")
-st.text(f"Polarity: {polarity} %")
-st.write("""---""")
+# st.header('Percentage-Wise')
+# st.text(f"Positive: {positive} %")
+# st.text(f"Negative: {negative} %")
+# st.text(f"Neutral: {neutral} %")
+# st.text(f"Polarity: {polarity} %")
+# st.write("""---""")
 #_---------------------------------------------------
 
 # plotting
