@@ -1,5 +1,6 @@
 import re
 from textblob import TextBlob
+import streamlit as st
 
 
 def clean_text(text):
@@ -23,4 +24,7 @@ def get_polarity(text):
 
 # calculate percentage
 def calculate_percentage(part,whole):
-  return 100 * (float(part)/float(whole))
+    try:
+        return 100 * (float(part)/float(whole))
+    except ZeroDivisionError as e:
+        return st.write("""No tweets found for query""")
