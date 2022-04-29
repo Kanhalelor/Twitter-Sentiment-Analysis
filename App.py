@@ -197,6 +197,7 @@ else:
   data['label'] = 0
   data.loc[data['positive'] > 0.2, 'label'] = 1
   data.loc[data['negative'] > 0.2, 'label'] = -1
+  st.write("""---""")
 
 
   st.subheader("Bar chart of Percentage Sentiment(```Vander```)")
@@ -257,11 +258,11 @@ else:
           shadow=False, startangle=90, textprops={'fontsize': 14})
   ax.legend( labels, loc='best',fontsize='x-small',markerfirst = True)
   plt.tight_layout()
-  ax.set_title("Common Words in the Tweet", fontsize= 20)
+  ax.set_title("Common Words in the Tweet", fontsize= 16)
   st.pyplot(fig)
 
   import matplotlib as mpl
-  mpl.rcParams['font.size'] = 15
+  mpl.rcParams['font.size'] = 12
 
 
 st.write("""---""")
