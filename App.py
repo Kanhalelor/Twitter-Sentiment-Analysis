@@ -31,7 +31,6 @@ st.write("""----""")
 
 # ----------Streamlit Side bar -------------------
 st.sidebar.header('Keywords Selection')
-st.write("""---""")
 
 start_date = st.sidebar.date_input("Start Date: ")
 end_date = st.sidebar.date_input("End Date: ")
@@ -128,13 +127,13 @@ else:
   positive_list = pd.DataFrame(positive_list)
 
 
-  st.header("Sentiment Summary")
+  st.subheader("Sentiment Summary")
   st.text(f"Total Number of Tweets: {len(tweet_list)}")
   st.text(f"positive number: {len(neutral_list)}") 
   st.text(f"Negative number: {len(negative)}")
   st.text(f"Neutral number: {len(positive_list)}")
 
-  st.header('Percentage-Wise')
+  st.subheader('Percentage of Tweet sentiment(```textblob```)')
   st.text(f"Positive: {positive} %")
   st.text(f"Negative: {negative} %")
   st.text(f"Neutral: {neutral} %")
@@ -200,7 +199,7 @@ else:
   data.loc[data['negative'] > 0.2, 'label'] = -1
 
 
-  st.subheader("Bar chart of Percentage Sentiment")
+  st.subheader("Bar chart of Percentage Sentiment(```Vander```)")
   st.write("""---""")
   sns.set(rc={'figure.figsize':(8,6)})
 
