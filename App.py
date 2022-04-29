@@ -255,7 +255,7 @@ else:
 
   ax.pie(rslt['Frequency'], explode=explode,labels =labels , autopct='%1.1f%%',
           shadow=False, startangle=90, textprops={'fontsize': 14})
-  ax.set_legend( labels, loc='best',fontsize='x-small',markerfirst = True)
+  ax.legend( labels, loc='best',fontsize='x-small',markerfirst = True)
   plt.tight_layout()
   ax.set_title("Common Words in the Tweet", fontsize= 20)
   st.pyplot(fig)
