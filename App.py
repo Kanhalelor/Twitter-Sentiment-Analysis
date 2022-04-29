@@ -108,10 +108,13 @@ for tweet in list(data['Tweet']):
     neutral += 1
     
 
-positive = calculate_percentage(positive, numOfTweets)
-negative = calculate_percentage(negative, numOfTweets)
-neutral = calculate_percentage(neutral, numOfTweets)
-polarity = calculate_percentage(polarity, numOfTweets)
+if calculate_percentage == True:
+  positive = calculate_percentage(positive, numOfTweets)
+  negative = calculate_percentage(negative, numOfTweets)
+  neutral = calculate_percentage(neutral, numOfTweets)
+  polarity = calculate_percentage(polarity, numOfTweets)
+else:
+  st.text("No tweets found for Query!")
 
 
 # format the data to one decimal place
