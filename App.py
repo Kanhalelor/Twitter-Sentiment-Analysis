@@ -16,7 +16,7 @@ from collections import Counter
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from datetime import date
-from helpers import clean_text, get_subjectivity, get_polarity
+from helpers import clean_text, get_subjectivity, get_polarity, calculate_percentage
 
 
 nltk.download('vader_lexicon')
@@ -66,10 +66,6 @@ data = pd.DataFrame(tweets,columns=['Tweet', 'Tweet Datetime', 'Tweet User', 'Tw
 # -----------------------------------------------
 
 numOfTweets = len(list(data["Tweet"]))
-
-# calculate percentage
-def calculate_percentage(part,whole):
-  return 100 * (float(part)/float(whole))
 
 
 positive = 0
