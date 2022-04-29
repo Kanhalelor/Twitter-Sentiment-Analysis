@@ -248,7 +248,7 @@ else:
   list_of_words = rslt.iloc[:,0].to_list()
   # Pie Chart
   fig,ax = plt.subplots()
-  ax.figure(figsize=[10,10]);
+#   ax.figure(figsize=[10,10]);
 
   explode = (0.1, 0.12, 0.122, 0,0,0,0,0,0,0)  # explode 1st slice
   labels=list_of_words
