@@ -13,9 +13,14 @@ def clean_text(text):
     
     return text
 
-
+# get subjectivity score
 def get_subjectivity(text):
     return TextBlob(text).sentiment.subjectivity
 
+# get plarity score
 def get_polarity(text):
     return TextBlob(text).sentiment.polarity
+
+# calculate percentage
+def calculate_percentage(part,whole):
+  return 100 * (float(part)/float(whole))
