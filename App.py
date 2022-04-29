@@ -23,9 +23,9 @@ nltk.download('vader_lexicon')
 
 # ------------------------- streamlit part starts ---------------
 # main menu 
-st.write("""# Twitter Sentiment Analysis App""")
+st.title("Twitter Sentiment Analysis App")
 st.text("NUST-DARA DATA SCIENCE SCHOOL 2022")
-st.write("""By: Robson & Chisabi""")
+st.write("""By:  Robson & Chisabi""")
 
 st.write("""----""")
 
@@ -143,7 +143,7 @@ else:
 # ---------------------------------------------------
 
   # plotting
-  st.header("""Pie chart of positive, Negative, and Neutral Sentiment""")
+  st.subheader("""Pie chart of positive, Negative, and Neutral Sentiment""")
   st.write("""---""")
   # ------------------ pie chart ---------------------
   fig, ax = plt.subplots()
@@ -169,8 +169,8 @@ else:
   data['Tweet'] = data['Tweet'].apply(clean_text)
 
 
-  st.header("Sentiment distribution, using wordcloud")
-  st.write("""---""")
+  st.subheader("Sentiment distribution, using wordcloud")
+#   st.write("""---""")
   from wordcloud import WordCloud
   allWords = ' '.join([twts for twts in data['Tweet']])
   wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
@@ -200,7 +200,7 @@ else:
   data.loc[data['negative'] > 0.2, 'label'] = -1
 
 
-  st.header("Plot of Percentage Sentiment")
+  st.subheader("Bar chart of Percentage Sentiment")
   st.write("""---""")
   sns.set(rc={'figure.figsize':(8,6)})
 
@@ -214,7 +214,7 @@ else:
 
   st.pyplot(fig)
   st.write("""---""")
-  st.header("Boxplot to see average values of the labels and the positivity")
+  st.subheader("Boxplot to see average values of the labels and the positivity")
   st.write("""---""")
 
   fig, ax = plt.subplots()
@@ -224,7 +224,7 @@ else:
   st.pyplot(fig)
 
 
-  st.write("""---""")
+#   st.write("""---""")
 
 
 st.write("""---""")
