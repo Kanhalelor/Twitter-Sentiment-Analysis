@@ -139,7 +139,7 @@ else:
   st.text(f"Negative: {negative} %")
   st.text(f"Neutral: {neutral} %")
   st.text(f"Polarity: {polarity} %")
-  st.write("""---""")
+#   st.write("""---""")
 # ---------------------------------------------------
 
   # plotting
@@ -226,5 +226,6 @@ else:
 
   st.write("""---""")
 
-  st.write("""---""")
-  st.text("Copyright &copy; @NUST-DARA, 2022")
+
+st.write("""---""")
+st.text("Copyright &copy; @NUST-DARA, 2022")
