@@ -10,3 +10,4 @@ scipy==1.7.3
 snscrape==0.3.4
 streamlit==1.8.1
 textblob==0.17.1
+seaborn==1.16.0
