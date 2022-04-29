@@ -173,7 +173,7 @@ from wordcloud import WordCloud
 allWords = ' '.join([twts for twts in data['Tweet']])
 wordCloud = WordCloud(width = 800, height= 500, random_state=21, max_font_size = 119).generate(allWords)
 
-fig,ax = plt.sublots()
+fig,ax = plt.subplots()
 ax.imshow(wordCloud, interpolation = "bilinear")
 ax.axis('off')
 st.pylot(fig)
