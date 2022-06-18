@@ -1,4 +1,5 @@
-# Twitter-Sentiment-Anylysis
+# Twitter-Sentiment-Analysis
+![sentiment-analysis.png](https://bit.ly/3QsznlA)
 
 **Note:**
 
